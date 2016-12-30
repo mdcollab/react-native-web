@@ -1,5 +1,6 @@
 import StyleSheet from '../StyleSheet';
 import View from '../../components/View';
+import Alert from '../Alert';
 import { any, object } from 'prop-types';
 import React, { Component } from 'react';
 
@@ -16,6 +17,7 @@ class ReactNativeApp extends Component {
     return (
       <View style={styles.appContainer}>
         <RootComponent {...initialProps} rootTag={rootTag} />
+        <Alert.AlertView />
       </View>
     );
   }
