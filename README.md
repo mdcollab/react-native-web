@@ -64,6 +64,7 @@ Exported modules:
   * [`VirtualizedList`](docs/components/VirtualizedList.md)
 * APIs
   * [`Animated`](http://facebook.github.io/react-native/releases/0.20/docs/animated.html) (mirrors React Native)
+  * [`Alert`](docs/apis/Alert.md)
   * [`AppRegistry`](docs/apis/AppRegistry.md)
   * [`AppState`](docs/apis/AppState.md)
   * [`AsyncStorage`](docs/apis/AsyncStorage.md)
