@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import AnimationPropTypes from '../../propTypes/AnimationPropTypes';
 import BorderPropTypes from '../../propTypes/BorderPropTypes';
 import ColorPropType from '../../propTypes/ColorPropType';
@@ -6,25 +10,19 @@ import ShadowPropTypes from '../../propTypes/ShadowPropTypes';
 import TransformPropTypes from '../../propTypes/TransformPropTypes';
 import { number, oneOf, oneOfType, string } from 'prop-types';
 
-const autoOrHiddenOrVisible = oneOf(['auto', 'hidden', 'visible']);
-const hiddenOrVisible = oneOf(['hidden', 'visible']);
-
 module.exports = {
   ...AnimationPropTypes,
   ...BorderPropTypes,
   ...LayoutPropTypes,
   ...ShadowPropTypes,
   ...TransformPropTypes,
-  backfaceVisibility: hiddenOrVisible,
   backgroundColor: ColorPropType,
   opacity: number,
-  overflow: autoOrHiddenOrVisible,
-  zIndex: number,
   /**
    * @platform unsupported
    */
   elevation: number,
-  /*
+  /**
    * @platform web
    */
   backgroundAttachment: string,
@@ -35,10 +33,11 @@ module.exports = {
   backgroundRepeat: string,
   backgroundSize: string,
   boxShadow: string,
+  clip: string,
   cursor: string,
+  filter: string,
   outline: string,
-  overflowX: autoOrHiddenOrVisible,
-  overflowY: autoOrHiddenOrVisible,
+  outlineColor: ColorPropType,
   perspective: oneOfType([number, string]),
   perspectiveOrigin: string,
   transitionDelay: string,
@@ -46,7 +45,7 @@ module.exports = {
   transitionProperty: string,
   transitionTimingFunction: string,
   userSelect: string,
-  visibility: hiddenOrVisible,
   willChange: string,
+  WebkitMaskImage: string,
   WebkitOverflowScrolling: oneOf(['auto', 'touch'])
 };

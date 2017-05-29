@@ -1,7 +1,26 @@
-import getAccessibilityRole from '../getAccessibilityRole';
+import AccessibilityUtil from '../AccessibilityUtil';
 import StyleSheet from '../../apis/StyleSheet';
+import StyleRegistry from '../../apis/StyleSheet/registry';
 
 const emptyObject = {};
+
+const styles = StyleSheet.create({
+  buttonReset: {
+    appearance: 'none',
+    backgroundColor: 'transparent',
+    color: 'inherit',
+    font: 'inherit',
+    textAlign: 'inherit'
+  },
+  linkReset: {
+    backgroundColor: 'transparent',
+    color: 'inherit',
+    textDecorationLine: 'none'
+  },
+  listReset: {
+    listStyle: 'none'
+  }
+});
 
 const pointerEventStyles = StyleSheet.create({
   auto: {
@@ -18,11 +37,15 @@ const pointerEventStyles = StyleSheet.create({
   }
 });
 
-const createDOMProps = (rnProps, resolveStyle) => {
+const resolver = style => StyleRegistry.resolve(style);
+
+const createDOMProps = (rnProps, resolveStyle = resolver) => {
+  const props = rnProps || emptyObject;
   const {
     accessibilityLabel,
     accessibilityLiveRegion,
-    accessible = true,
+    accessible,
+    importantForAccessibility,
     pointerEvents,
     style: rnStyle,
     testID,
@@ -33,25 +56,35 @@ const createDOMProps = (rnProps, resolveStyle) => {
     accessibilityTraits,
     /* eslint-enable */
     ...domProps
-  } = rnProps || emptyObject;
+  } = props;
 
-  const pointerEventStyle = pointerEvents && pointerEventStyles[pointerEvents];
-  const { className, style } = resolveStyle([rnStyle, pointerEventStyle]) || emptyObject;
-  const role = getAccessibilityRole(rnProps || emptyObject);
+  const role = AccessibilityUtil.propsToAriaRole(props);
+  const pointerEventStyle = pointerEvents !== undefined && pointerEventStyles[pointerEvents];
+  const reactNativeStyle = [
+    (role === 'button' && styles.buttonReset) ||
+      (role === 'link' && styles.linkReset) ||
+      (role === 'list' && styles.listReset),
+    rnStyle,
+    pointerEventStyle
+  ];
+  const { className, style } = resolveStyle(reactNativeStyle) || emptyObject;
 
-  if (!accessible) {
-    domProps['aria-hidden'] = true;
+  if (accessible === true) {
+    domProps.tabIndex = AccessibilityUtil.propsToTabIndex(props);
   }
-  if (accessibilityLabel) {
+  if (typeof accessibilityLabel === 'string') {
     domProps['aria-label'] = accessibilityLabel;
   }
   if (typeof accessibilityLiveRegion === 'string') {
     domProps['aria-live'] = accessibilityLiveRegion === 'none' ? 'off' : accessibilityLiveRegion;
   }
-  if (className && className !== '') {
+  if (typeof className === 'string' && className !== '') {
     domProps.className = domProps.className ? `${domProps.className} ${className}` : className;
   }
-  if (role) {
+  if (importantForAccessibility === 'no-hide-descendants') {
+    domProps['aria-hidden'] = true;
+  }
+  if (typeof role === 'string') {
     domProps.role = role;
     if (role === 'button') {
       domProps.type = 'button';
@@ -59,13 +92,13 @@ const createDOMProps = (rnProps, resolveStyle) => {
       domProps.rel = `${domProps.rel || ''} noopener noreferrer`;
     }
   }
-  if (style) {
+  if (style != null) {
     domProps.style = style;
   }
-  if (testID) {
+  if (typeof testID === 'string') {
     domProps['data-testid'] = testID;
   }
-  if (type) {
+  if (typeof type === 'string') {
     domProps.type = type;
   }
 

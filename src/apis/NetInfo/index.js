@@ -10,7 +10,8 @@ import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import findIndex from 'array-find-index';
 import invariant from 'fbjs/lib/invariant';
 
-const connection = ExecutionEnvironment.canUseDOM &&
+const connection =
+  ExecutionEnvironment.canUseDOM &&
   (window.navigator.connection ||
     window.navigator.mozConnection ||
     window.navigator.webkitConnection);
@@ -49,7 +50,7 @@ const NetInfo = {
     connection.removeEventListener(type, handler);
   },
 
-  fetch(): Promise {
+  fetch(): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
         resolve(connection.type);
@@ -98,7 +99,7 @@ const NetInfo = {
       connectionListeners.splice(listenerIndex, 1);
     },
 
-    fetch(): Promise {
+    fetch(): Promise<any> {
       return new Promise((resolve, reject) => {
         try {
           resolve(window.navigator.onLine);

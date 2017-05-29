@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import ColorPropType from '../../propTypes/ColorPropType';
 import StyleSheet from '../../apis/StyleSheet';
 import TouchableOpacity from '../Touchable/TouchableOpacity';
@@ -16,14 +20,7 @@ class Button extends Component {
   };
 
   render() {
-    const {
-      accessibilityLabel,
-      color,
-      disabled,
-      onPress,
-      testID,
-      title
-    } = this.props;
+    const { accessibilityLabel, color, disabled, onPress, testID, title } = this.props;
 
     return (
       <TouchableOpacity

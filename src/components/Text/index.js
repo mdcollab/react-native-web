@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import BaseComponentPropTypes from '../../propTypes/BaseComponentPropTypes';
@@ -22,13 +26,21 @@ class Text extends Component {
     style: StyleSheetPropType(TextStylePropTypes)
   };
 
-  static defaultProps = {
-    accessible: true,
-    selectable: true
+  static childContextTypes = {
+    isInAParentText: bool
   };
+
+  static contextTypes = {
+    isInAParentText: bool
+  };
+
+  getChildContext() {
+    return { isInAParentText: true };
+  }
 
   render() {
     const {
+      dir,
       numberOfLines,
       onPress,
       selectable,
@@ -46,22 +58,23 @@ class Text extends Component {
     } = this.props;
 
     if (onPress) {
+      otherProps.accessible = true;
       otherProps.onClick = onPress;
       otherProps.onKeyDown = this._createEnterHandler(onPress);
-      otherProps.tabIndex = 0;
     }
 
+    // allow browsers to automatically infer the language writing direction
+    otherProps.dir = dir !== undefined ? dir : 'auto';
     otherProps.style = [
       styles.initial,
+      this.context.isInAParentText !== true && styles.preserveWhitespace,
       style,
-      !selectable && styles.notSelectable,
+      selectable === false && styles.notSelectable,
       numberOfLines === 1 && styles.singleLineStyle,
       onPress && styles.pressable
     ];
-    // allow browsers to automatically infer the language writing direction
-    otherProps.dir = 'auto';
 
-    return createDOMElement('span', otherProps);
+    return createDOMElement('div', otherProps);
   }
 
   _createEnterHandler(fn) {
@@ -82,8 +95,10 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     textDecorationLine: 'none',
-    whiteSpace: 'pre-wrap',
     wordWrap: 'break-word'
+  },
+  preserveWhitespace: {
+    whiteSpace: 'pre-wrap'
   },
   notSelectable: {
     userSelect: 'none'

@@ -1,8 +1,12 @@
+/**
+ * @flow
+ */
+
+import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import applyLayout from '../../modules/applyLayout';
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import { bool } from 'prop-types';
 import createDOMElement from '../../modules/createDOMElement';
-import getAccessibilityRole from '../../modules/getAccessibilityRole';
 import StyleSheet from '../../apis/StyleSheet';
 import ViewPropTypes from './ViewPropTypes';
 import React, { Component } from 'react';
@@ -14,7 +18,7 @@ const calculateHitSlopStyle = hitSlop => {
   for (const prop in hitSlop) {
     if (hitSlop.hasOwnProperty(prop)) {
       const value = hitSlop[prop];
-      hitStyle[prop] = value > 0 ? (-1) * value : 0;
+      hitStyle[prop] = value > 0 ? -1 * value : 0;
     }
   }
   return hitStyle;
@@ -25,10 +29,6 @@ class View extends Component {
 
   static propTypes = ViewPropTypes;
 
-  static defaultProps = {
-    accessible: true
-  };
-
   static childContextTypes = {
     isInAButtonView: bool
   };
@@ -38,8 +38,8 @@ class View extends Component {
   };
 
   getChildContext() {
-    const isInAButtonView = getAccessibilityRole(this.props) === 'button' ||
-      this.context.isInAButtonView;
+    const isInAButtonView =
+      AccessibilityUtil.propsToAriaRole(this.props) === 'button' || this.context.isInAButtonView;
     return isInAButtonView ? { isInAButtonView } : emptyObject;
   }
 
@@ -58,9 +58,8 @@ class View extends Component {
     } = this.props;
 
     const { isInAButtonView } = this.context;
-    const isButton = getAccessibilityRole(this.props) === 'button';
 
-    otherProps.style = [styles.initial, isButton && styles.buttonOnly, style];
+    otherProps.style = [styles.initial, style];
 
     if (hitSlop) {
       const hitSlopStyle = calculateHitSlopStyle(hitSlop);
@@ -88,20 +87,9 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     position: 'relative',
-    // button and anchor resets
-    backgroundColor: 'transparent',
-    color: 'inherit',
-    font: 'inherit',
-    textAlign: 'inherit',
-    textDecorationLine: 'none',
-    // list reset
-    listStyle: 'none',
     // fix flexbox bugs
     minHeight: 0,
     minWidth: 0
-  },
-  buttonOnly: {
-    appearance: 'none'
   },
   // this zIndex ordering positions the hitSlop above the View but behind
   // its children

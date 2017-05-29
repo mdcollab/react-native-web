@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import findIndex from 'array-find-index';
 import invariant from 'fbjs/lib/invariant';
@@ -13,11 +17,11 @@ const AppStates = {
 const listeners = [];
 
 class AppState {
-  static isSupported = ExecutionEnvironment.canUseDOM && document.visibilityState;
+  static isAvailable = ExecutionEnvironment.canUseDOM && document.visibilityState;
 
   static get currentState() {
-    if (!AppState.isSupported) {
-      return AppState.ACTIVE;
+    if (!AppState.isAvailable) {
+      return AppStates.ACTIVE;
     }
 
     switch (document.visibilityState) {
@@ -31,7 +35,7 @@ class AppState {
   }
 
   static addEventListener(type: string, handler: Function) {
-    if (AppState.isSupported) {
+    if (AppState.isAvailable) {
       invariant(
         EVENT_TYPES.indexOf(type) !== -1,
         'Trying to subscribe to unknown event: "%s"',
@@ -44,7 +48,7 @@ class AppState {
   }
 
   static removeEventListener(type: string, handler: Function) {
-    if (AppState.isSupported) {
+    if (AppState.isAvailable) {
       invariant(
         EVENT_TYPES.indexOf(type) !== -1,
         'Trying to remove listener for unknown event: "%s"',

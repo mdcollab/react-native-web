@@ -18,36 +18,31 @@ Browser support: Chrome, Firefox, Safari >= 7, IE 10, Edge.
 "React Native for Web" is a project to bring React Native's building blocks and
 touch handling to the Web. [Read more](#why).
 
-Browse the UI Explorer to see React Native [examples running on
-Web](https://necolas.github.io/react-native-web/storybook/). Or try it out
-online with [React Native for Web: Playground](http://codepen.io/necolas/pen/PZzwBR).
+Browse the [UI Explorer](https://necolas.github.io/react-native-web/storybook/)
+to see React Native examples running on Web. Or try it out online with [React
+Native for Web: Playground](https://www.webpackbin.com/bins/-KgucwxRbn7HRU-V-3Bc).
 
 ## Quick start
 
 To install in your app:
 
 ```
-npm install --save react@15.4 react-native-web
+npm install --save react@15.5 react-dom@15.5 react-native-web
 ```
 
-Read the [Client and Server rendering](docs/guides/rendering.md) guide.
-
-Alternatively, you can quickly setup a local project
-using [create-react-app](https://github.com/facebookincubator/create-react-app)
-(which supports `react-native-web` out-of-the-box once installed) and
-[react-native-web-starter](https://github.com/grabcode/react-native-web-starter).
+Read the [Getting Started](docs/guides/getting-started.md) guide.
 
 ## Documentation
 
 Guides:
 
+* [Getting started](docs/guides/getting-started.md)
+* [Style](docs/guides/style.md)
 * [Accessibility](docs/guides/accessibility.md)
-* [Client and server rendering](docs/guides/rendering.md)
 * [Direct manipulation](docs/guides/direct-manipulation.md)
 * [Internationalization](docs/guides/internationalization.md)
+* [Advanced use](docs/guides/advanced.md)
 * [Known issues](docs/guides/known-issues.md)
-* [React Native](docs/guides/react-native.md)
-* [Style](docs/guides/style.md)
 
 Exported modules:
 
@@ -88,17 +83,16 @@ Exported modules:
 There are many different teams at Twitter building web applications with React.
 We want to share React components, libraries, and APIs between teams…much like
 the OSS community tries to do. At our scale, this involves dealing with
-multiple, inter-related problems including: a common way to handle style,
-animation, touch, viewport adaptation, accessibility, themes, RTL layout, and
-server-rendering.
+multiple, inter-related problems including: component styles, animation, touch
+interactions, layout adaptation, accessibility, RTL layout, theming, and build-
+or server-rendering.
 
 This is hard to do with React DOM, as the components are essentially the same
 low-level building blocks that the browser provides. However, React Native
-avoids, solves, or can solve almost all these problems facing Web teams.
-Central to this is React Native's JavaScript style API (not strictly
-"CSS-in-JS") which avoids the key [problems with
-CSS](https://speakerdeck.com/vjeux/react-css-in-js) by giving up some of the
-complexity of CSS.
+avoids, solves, or can solve almost all these problems. Central to this is
+React Native's JavaScript style API (not strictly "CSS-in-JS") which avoids the
+key [problems with CSS](https://speakerdeck.com/vjeux/react-css-in-js) by
+giving up some of the complexity of CSS.
 
 ## Example code
 
@@ -141,11 +135,11 @@ AppRegistry.runApplication('MyApp', { rootTag: document.getElementById('react-ro
 
 ## Related projects
 
-* [react-native-web-starter](https://github.com/grabcode/react-native-web-starter)
 * [react-native-web-player](https://github.com/dabbott/react-native-web-player)
+* [react-native-web-starter](https://github.com/grabcode/react-native-web-starter)
+* [react-native-web-webpack](https://github.com/ndbroadbent/react-native-web-webpack)
+* [reactxp](https://github.com/microsoft/reactxp)
 * [react-web](https://github.com/taobaofed/react-web)
-* [react-native-for-web](https://github.com/KodersLab/react-native-for-web)
-* [rhinos-app](https://github.com/rhinos-app/rhinos-app-dev)
 
 ## License
 

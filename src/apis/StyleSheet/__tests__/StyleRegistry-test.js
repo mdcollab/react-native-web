@@ -1,5 +1,6 @@
 /* eslint-env jasmine, jest */
 
+import I18nManager from '../../I18nManager';
 import StyleRegistry from '../StyleRegistry';
 
 let styleRegistry;
@@ -46,6 +47,16 @@ describe('apis/StyleSheet/StyleRegistry', () => {
       testResolve(a, b, c);
     });
 
+    test('with register before RTL, resolves to className', () => {
+      const a = styleRegistry.register({ left: '12.34%' });
+      const b = styleRegistry.register({ textAlign: 'left' });
+      const c = styleRegistry.register({ marginLeft: 10 });
+      I18nManager.forceRTL(true);
+      const resolved = styleRegistry.resolve([a, b, c]);
+      I18nManager.forceRTL(false);
+      expect(resolved).toMatchSnapshot();
+    });
+
     test('with register, resolves to mixed', () => {
       const a = styleA;
       const b = styleRegistry.register(styleB);
@@ -58,19 +69,37 @@ describe('apis/StyleSheet/StyleRegistry', () => {
     });
   });
 
-  test('resolveStateful', () => {
-    // generate a classList to act as pre-existing DOM state
-    const mockStyle = styleRegistry.register({
-      borderWidth: 0,
-      borderColor: 'red',
-      width: 100
+  describe('resolveStateful', () => {
+    test('preserves unrelated class names', () => {
+      const domStyleProps = { classList: ['unknown-class-1', 'unknown-class-2'], style: {} };
+      const domStyleNextProps = styleRegistry.resolveStateful({}, domStyleProps);
+      expect(domStyleNextProps).toMatchSnapshot();
     });
-    const { classList: domClassList } = styleRegistry.resolve(mockStyle);
-    domClassList.unshift('external-className');
-    expect(domClassList).toMatchSnapshot();
 
-    // test result
-    const result = styleRegistry.resolveStateful({ borderWidth: 1, opacity: 1 }, domClassList);
-    expect(result).toMatchSnapshot();
+    test('preserves unrelated inline styles', () => {
+      const domStyleProps = { classList: [], style: { fontSize: '20px' } };
+      const domStyleNextProps = styleRegistry.resolveStateful({ opacity: 1 }, domStyleProps);
+      expect(domStyleNextProps).toMatchSnapshot();
+    });
+
+    test('next class names have priority over current inline styles', () => {
+      const domStyleProps = { classList: [], style: { opacity: 0.5 } };
+      const nextStyle = styleRegistry.register({ opacity: 1 });
+      const domStyleNextProps = styleRegistry.resolveStateful(nextStyle, domStyleProps);
+      expect(domStyleNextProps).toMatchSnapshot();
+    });
+
+    test('next inline styles have priority over current inline styles', () => {
+      // note: this also checks for correctly uppercasing the first letter of DOM vendor prefixes
+      const domStyleProps = {
+        classList: [],
+        style: { opacity: 0.5, WebkitTransform: 'scale(1)', transform: 'scale(1)' }
+      };
+      const domStyleNextProps = styleRegistry.resolveStateful(
+        { opacity: 1, transform: [{ scale: 2 }] },
+        domStyleProps
+      );
+      expect(domStyleNextProps).toMatchSnapshot();
+    });
   });
 });

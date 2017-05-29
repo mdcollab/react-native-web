@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 const Linking = {
   addEventListener() {},
   removeEventListener() {},
@@ -7,7 +11,7 @@ const Linking = {
   getInitialURL() {
     return Promise.resolve('');
   },
-  openURL(url) {
+  openURL(url: string) {
     try {
       iframeOpen(url);
       return Promise.resolve();
@@ -28,15 +32,17 @@ const Linking = {
  * https://mathiasbynens.github.io/rel-noopener/
  */
 const iframeOpen = url => {
+  const noOpener = url.indexOf('mailto:') !== 0;
   const iframe = document.createElement('iframe');
   iframe.style.display = 'none';
   document.body.appendChild(iframe);
 
   const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
   const script = iframeDoc.createElement('script');
+  const openerExpression = noOpener ? 'child.opener = null' : '';
   script.text = `
     window.parent = null; window.top = null; window.frameElement = null;
-    var child = window.open("${url}"); child.opener = null;
+    var child = window.open("${url}"); ${openerExpression};
   `;
   iframeDoc.body.appendChild(script);
   document.body.removeChild(iframe);

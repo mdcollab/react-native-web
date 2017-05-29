@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import StyleSheet from '../../apis/StyleSheet';
 import View from '../View';
@@ -24,14 +28,7 @@ class ActivityIndicator extends Component {
   };
 
   render() {
-    const {
-      animating,
-      color,
-      hidesWhenStopped,
-      size,
-      style,
-      ...other
-    } = this.props;
+    const { animating, color, hidesWhenStopped, size, style, ...other } = this.props;
 
     const svg = (
       <svg height="100%" viewBox="0 0 32 32" width="100%">

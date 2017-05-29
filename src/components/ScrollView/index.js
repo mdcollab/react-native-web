@@ -17,7 +17,7 @@ import StyleSheetPropType from '../../propTypes/StyleSheetPropType';
 import View from '../View';
 import ViewPropTypes from '../View/ViewPropTypes';
 import ViewStylePropTypes from '../View/ViewStylePropTypes';
-import React, { Component } from 'react';
+import React from 'react';
 import { bool, element, func, number, oneOf } from 'prop-types';
 
 const emptyObject = {};
@@ -54,7 +54,7 @@ const ScrollView = createReactClass({
    * implement this method so that they can be composed while providing access
    * to the underlying scroll responder's methods.
    */
-  getScrollResponder(): Component {
+  getScrollResponder(): ScrollView {
     return this;
   },
 
@@ -143,11 +143,7 @@ const ScrollView = createReactClass({
         children={this.props.children}
         collapsable={false}
         ref={this._setInnerViewRef}
-        style={[
-          styles.contentContainer,
-          horizontal && styles.contentContainerHorizontal,
-          contentContainerStyle
-        ]}
+        style={[horizontal && styles.contentContainerHorizontal, contentContainerStyle]}
       />
     );
 
@@ -232,15 +228,16 @@ const styles = StyleSheet.create({
     flex: 1,
     overflowX: 'hidden',
     overflowY: 'auto',
-    WebkitOverflowScrolling: 'touch'
+    WebkitOverflowScrolling: 'touch',
+    // Enable hardware compositing in modern browsers.
+    // Creates a new layer with its own backing surface that can significantly
+    // improve scroll performance.
+    transform: [{ translateZ: 0 }]
   },
   baseHorizontal: {
     flexDirection: 'row',
     overflowX: 'auto',
     overflowY: 'hidden'
-  },
-  contentContainer: {
-    transform: [{ translateZ: 0 }]
   },
   contentContainerHorizontal: {
     flexDirection: 'row'
