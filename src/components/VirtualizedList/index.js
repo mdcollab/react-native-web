@@ -105,7 +105,7 @@ class VirtualizedList extends Component {
   }
 
   bindList = element => {
-    this.listRef = element.domRef;
+    this.listRef = element && element.domRef;
   };
 
   chunkData(data) {
