@@ -10,6 +10,7 @@ import {
   processColor,
 
   // APIs
+  Alert,
   Animated,
   AppRegistry,
   AppState,
@@ -66,6 +67,7 @@ const ReactNative = {
   processColor,
 
   // APIs
+  Alert,
   Animated,
   AppRegistry,
   AppState,
