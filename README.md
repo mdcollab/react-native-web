@@ -49,6 +49,7 @@ Exported modules:
 * Components
   * [`ActivityIndicator`](docs/components/ActivityIndicator.md)
   * [`Button`](docs/components/Button.md)
+  * [`FlatList`](docs/components/FlatList.md)
   * [`Image`](docs/components/Image.md)
   * [`ListView`](docs/components/ListView.md)
   * [`ProgressBar`](docs/components/ProgressBar.md)
@@ -60,6 +61,7 @@ Exported modules:
   * [`TouchableOpacity`](http://facebook.github.io/react-native/releases/0.22/docs/touchableopacity.html) (mirrors React Native)
   * [`TouchableWithoutFeedback`](docs/components/TouchableWithoutFeedback.md)
   * [`View`](docs/components/View.md)
+  * [`VirtualizedList`](docs/components/VirtualizedList.md)
 * APIs
   * [`Animated`](http://facebook.github.io/react-native/releases/0.20/docs/animated.html) (mirrors React Native)
   * [`AppRegistry`](docs/apis/AppRegistry.md)
