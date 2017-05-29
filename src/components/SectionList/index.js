@@ -2,6 +2,7 @@ const React = require('react');
 
 const Platform = require('../../apis/Platform');
 const VirtualizedSectionList = require('../VirtualizedSectionList');
+const applyNativeMethods = require('../../modules/applyNativeMethods');
 
 
 const defaultProps = {
@@ -49,4 +50,4 @@ class SectionList<SectionT: SectionBase<any>> extends React.PureComponent<Defaul
   _captureRef = (ref) => { this._wrapperListRef = ref; };
 }
 
-module.exports = SectionList;
+module.exports = applyNativeMethods(SectionList);
