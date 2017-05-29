@@ -50,6 +50,8 @@ export {
 export { default as View } from './components/View';
 export { default as VirtualizedList } from './components/VirtualizedList';
 export { default as FlatList } from './components/FlatList';
+export { default as SectionList } from './components/SectionList';
+export { default as VirtualizedSectionList } from './components/VirtualizedSectionList';
 
 // propTypes
 export { default as ColorPropType } from './propTypes/ColorPropType';

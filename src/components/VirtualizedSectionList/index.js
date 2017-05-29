@@ -3,6 +3,7 @@ const invariant = require('fbjs/lib/invariant');
 
 const View = require('../View');
 const VirtualizedList = require('../VirtualizedList');
+const applyNativeMethods = require('../../modules/applyNativeMethods');
 
 
 class VirtualizedSectionList<SectionT: SectionBase> extends React.PureComponent<DefaultProps, Props<SectionT>, State>
@@ -321,4 +322,4 @@ function getItem(sections: ?$ReadOnlyArray<Item>, index: number): ?Item {
   return null;
 }
 
-module.exports = VirtualizedSectionList;
+module.exports = applyNativeMethods(VirtualizedSectionList);

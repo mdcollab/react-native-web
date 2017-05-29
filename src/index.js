@@ -49,6 +49,8 @@ import {
   View,
   VirtualizedList,
   FlatList,
+  SectionList,
+  VirtualizedSectionList,
 
   // propTypes
   ColorPropType,
@@ -109,6 +111,8 @@ const ReactNative = {
   View,
   VirtualizedList,
   FlatList,
+  SectionList,
+  VirtualizedSectionList,
 
   // propTypes
   ColorPropType,
