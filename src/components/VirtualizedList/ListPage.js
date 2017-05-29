@@ -113,7 +113,7 @@ export default class ListPage extends Component {
   };
 
   assignPageRef = element => {
-    this.pageRef = element.domRef;
+    this.pageRef = element && element.domRef;
   };
 
   assignElementRef(index) {
