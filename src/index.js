@@ -47,6 +47,10 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  FlatList,
+  SectionList,
+  VirtualizedList,
+  VirtualizedSectionList,
 
   // propTypes
   ColorPropType,
@@ -105,6 +109,10 @@ const ReactNative = {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  FlatList,
+  SectionList,
+  VirtualizedList,
+  VirtualizedSectionList,
 
   // propTypes
   ColorPropType,

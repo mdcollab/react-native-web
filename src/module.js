@@ -44,6 +44,10 @@ export {
   default as TouchableWithoutFeedback
 } from './components/Touchable/TouchableWithoutFeedback';
 export { default as View } from './components/View';
+export { default as FlatList } from './components/lists/FlatList';
+export { default as SectionList } from './components/lists/SectionList';
+export { default as VirtualizedList } from './components/lists/VirtualizedList';
+export { default as VirtualizedSectionList } from './components/lists/VirtualizedSectionList';
 
 // propTypes
 export { default as ColorPropType } from './propTypes/ColorPropType';
