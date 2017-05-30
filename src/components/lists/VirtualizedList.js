@@ -11,7 +11,7 @@
  */
 'use strict';
 
-const Batchinator = require('./Batchinator');
+const Batchinator = require('../../modules/Batchinator');
 const FillRateHelper = require('./FillRateHelper');
 const React = require('react');
 const findNodeHandle = require('../../modules/findNodeHandle');
