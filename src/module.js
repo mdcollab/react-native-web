@@ -15,6 +15,7 @@ export { default as Dimensions } from './apis/Dimensions';
 export { default as Easing } from 'animated/lib/Easing';
 export { default as I18nManager } from './apis/I18nManager';
 export { default as InteractionManager } from './apis/InteractionManager';
+export { default as LayoutAnimation } from './apis/LayoutAnimation';
 export { default as Linking } from './apis/Linking';
 export { default as NetInfo } from './apis/NetInfo';
 export { default as PanResponder } from './apis/PanResponder';
