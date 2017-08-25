@@ -14,7 +14,7 @@
 
 const Batchinator = require('../../modules/Batchinator');
 const FillRateHelper = require('./FillRateHelper');
-const React = require('react');
+const React, {PropTypes} = require('react');
 const findNodeHandle = require('../../modules/findNodeHandle');
 const ScrollView = require('../ScrollView');
 const View = require('../View');
@@ -336,9 +336,17 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
     windowSize: 21, // multiples of length
   };
 
-  static contextTypes = {};
+  static contextTypes = {
+    virtualizedList: PropTypes.shape({
+      horizontal: PropTypes.bool,
+    }),
+  };
 
-  static childContextTypes = {};
+  static childContextTypes = {
+    virtualizedList: PropTypes.shape({
+      horizontal: PropTypes.bool,
+    }),
+  };
 
   getChildContext() {
     return {
