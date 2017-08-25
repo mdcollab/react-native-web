@@ -12,25 +12,22 @@
  */
 'use strict';
 
-const Batchinator = require('Batchinator');
-const FillRateHelper = require('FillRateHelper');
-const PropTypes = require('prop-types');
-const React = require('React');
-const ReactNative = require('ReactNative');
-const RefreshControl = require('RefreshControl');
-const ScrollView = require('ScrollView');
-const StyleSheet = require('StyleSheet');
-const View = require('View');
-const ViewabilityHelper = require('ViewabilityHelper');
+const Batchinator = require('../../modules/Batchinator');
+const FillRateHelper = require('./FillRateHelper');
+const React = require('react');
+const findNodeHandle = require('../../modules/findNodeHandle');
+const ScrollView = require('../ScrollView');
+const View = require('../View');
+const ViewabilityHelper = require('./ViewabilityHelper');
+const RefreshControl = require('../../components/RefreshControl');
+const StyleSheet = require('../../apis/StyleSheet');
 
-const flattenStyle = require('flattenStyle');
-const infoLog = require('infoLog');
+const flattenStyle = require('../../apis/StyleSheet/flattenStyle');
 const invariant = require('fbjs/lib/invariant');
 const warning = require('fbjs/lib/warning');
 
-const {computeWindowedRenderLimits} = require('VirtualizeUtils');
+const {computeWindowedRenderLimits} = require('./VirtualizeUtils');
 
-import type {StyleObj} from 'StyleSheetTypes';
 import type {ViewabilityConfig, ViewToken} from 'ViewabilityHelper';
 
 type Item = any;
@@ -311,7 +308,7 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
       return this._scrollRef.getScrollableNode();
     } else {
-      return ReactNative.findNodeHandle(this._scrollRef);
+      return findNodeHandle(this._scrollRef);
     }
   }
 
@@ -339,17 +336,9 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
     windowSize: 21, // multiples of length
   };
 
-  static contextTypes = {
-    virtualizedList: PropTypes.shape({
-      horizontal: PropTypes.bool,
-    }),
-  };
+  static contextTypes = {};
 
-  static childContextTypes = {
-    virtualizedList: PropTypes.shape({
-      horizontal: PropTypes.bool,
-    }),
-  };
+  static childContextTypes = {};
 
   getChildContext() {
     return {
@@ -439,7 +428,6 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
     stickyIndicesFromProps: Set<number>,
     first: number,
     last: number,
-    inversionStyle: ?StyleObj,
   ) {
     const {
       ItemSeparatorComponent,
@@ -940,12 +928,6 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
       contentLength > 5 * visibleLength &&
       !this._hasWarned.perf
     ) {
-      infoLog(
-        'VirtualizedList: You have a large list that is slow to update - make sure your ' +
-          'renderItem function renders components that follow React performance best practices ' +
-          'like PureComponent, shouldComponentUpdate, etc.',
-        {dt, prevDt: this._scrollMetrics.dt, contentLength},
-      );
       this._hasWarned.perf = true;
     }
     const dOffset = offset - this._scrollMetrics.offset;
@@ -1118,19 +1100,6 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
     if (!frame || frame.index !== index) {
       if (getItemLayout) {
         frame = getItemLayout(data, index);
-        if (__DEV__) {
-          const frameType = PropTypes.shape({
-            length: PropTypes.number.isRequired,
-            offset: PropTypes.number.isRequired,
-            index: PropTypes.number.isRequired,
-          }).isRequired;
-          PropTypes.checkPropTypes(
-            {frame: frameType},
-            {frame},
-            'frame',
-            'VirtualizedList.getItemLayout',
-          );
-        }
       }
     }
     return frame;
@@ -1159,7 +1128,6 @@ class CellRenderer extends React.Component {
     cellKey: string,
     fillRateHelper: FillRateHelper,
     index: number,
-    inversionStyle: ?StyleObj,
     item: Item,
     onLayout: (event: Object) => void, // This is extracted by ScrollViewStickyHeader
     onUnmount: (cellKey: string) => void,

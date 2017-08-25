@@ -12,10 +12,10 @@
  */
 'use strict';
 
-const MetroListView = require('MetroListView'); // Used as a fallback legacy option
-const React = require('React');
-const View = require('View');
-const VirtualizedList = require('VirtualizedList');
+const React = require('react');
+const View = require('../View');
+const VirtualizedList = require('./VirtualizedList');
+const MetroListView = require('./MetroListView'); // Used as a fallback legacy option
 
 const invariant = require('fbjs/lib/invariant');
 
