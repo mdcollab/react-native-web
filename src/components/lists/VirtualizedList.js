@@ -14,7 +14,8 @@
 
 const Batchinator = require('../../modules/Batchinator');
 const FillRateHelper = require('./FillRateHelper');
-const React, {PropTypes} = require('react');
+const React = require('react');
+const PropTypes = React.PropTypes;
 const findNodeHandle = require('../../modules/findNodeHandle');
 const ScrollView = require('../ScrollView');
 const View = require('../View');
