@@ -437,6 +437,7 @@ class VirtualizedList extends React.PureComponent<OptionalProps, Props, State> {
     stickyIndicesFromProps: Set<number>,
     first: number,
     last: number,
+    inversionStyle: any,
   ) {
     const {
       ItemSeparatorComponent,
@@ -1137,6 +1138,7 @@ class CellRenderer extends React.Component {
     cellKey: string,
     fillRateHelper: FillRateHelper,
     index: number,
+    inversionStyle: any,
     item: Item,
     onLayout: (event: Object) => void, // This is extracted by ScrollViewStickyHeader
     onUnmount: (cellKey: string) => void,
