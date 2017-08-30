@@ -45,6 +45,9 @@ export { default as TouchableOpacity } from './components/Touchable/TouchableOpa
 export {
   default as TouchableWithoutFeedback
 } from './components/Touchable/TouchableWithoutFeedback';
+export {
+  default as TouchableNativeFeedback
+} from './components/Touchable/TouchableNativeFeedback';
 export { default as View } from './components/View';
 export { default as FlatList } from './components/lists/FlatList';
 export { default as SectionList } from './components/lists/SectionList';

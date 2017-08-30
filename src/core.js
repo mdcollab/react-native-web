@@ -15,6 +15,7 @@ import Touchable from './components/Touchable/Touchable';
 import TouchableHighlight from './components/Touchable/TouchableHighlight';
 import TouchableOpacity from './components/Touchable/TouchableOpacity';
 import TouchableWithoutFeedback from './components/Touchable/TouchableWithoutFeedback';
+import TouchableNativeFeedback from './components/Touchable/TouchableNativeFeedback';
 import View from './components/View';
 
 // modules
@@ -41,6 +42,7 @@ const ReactNativeCore = {
   TouchableHighlight,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  TouchableNativeFeedback,
   View
 };
 
