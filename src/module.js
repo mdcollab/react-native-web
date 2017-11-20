@@ -30,7 +30,7 @@ import Vibration from './apis/Vibration';
 // components
 import ActivityIndicator from './components/ActivityIndicator';
 import Button from './components/Button';
-import FlatList from './components/FlatList';
+import FlatList from './components/Lists/FlatList';
 import Image from './components/Image';
 import KeyboardAvoidingView from './components/KeyboardAvoidingView';
 import ListView from './components/ListView';
@@ -39,7 +39,7 @@ import Picker from './components/Picker';
 import ProgressBar from './components/ProgressBar';
 import RefreshControl from './components/RefreshControl';
 import ScrollView from './components/ScrollView';
-import SectionList from './components/SectionList';
+import SectionList from './components/Lists/SectionList';
 import Slider from './components/Slider';
 import StatusBar from './components/StatusBar';
 import Switch from './components/Switch';
@@ -51,7 +51,6 @@ import TouchableNativeFeedback from './components/Touchable/TouchableNativeFeedb
 import TouchableOpacity from './components/Touchable/TouchableOpacity';
 import TouchableWithoutFeedback from './components/Touchable/TouchableWithoutFeedback';
 import View from './components/View';
-import VirtualizedList from './components/VirtualizedList';
 
 // propTypes
 import ColorPropType from './propTypes/ColorPropType';
@@ -116,7 +115,6 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  VirtualizedList,
   // propTypes
   ColorPropType,
   EdgeInsetsPropType,
@@ -184,7 +182,6 @@ const ReactNative = {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  VirtualizedList,
 
   // propTypes
   ColorPropType,

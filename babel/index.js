@@ -29,7 +29,6 @@ const getDistLocation = importName => {
     // components
     case 'ActivityIndicator':
     case 'Button':
-    case 'FlatList':
     case 'Image':
     case 'KeyboardAvoidingView':
     case 'ListView':
@@ -44,9 +43,13 @@ const getDistLocation = importName => {
     case 'Switch':
     case 'Text':
     case 'TextInput':
-    case 'View':
-    case 'VirtualizedList': {
+    case 'View': {
       return `${root}/components/${importName}`;
+    }
+
+    case 'FlatList':
+    case 'SectionList': {
+      return `${root}/components/Lists/${importName}`;
     }
 
     case 'Touchable':
