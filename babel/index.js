@@ -14,6 +14,7 @@ const getDistLocation = importName => {
     case 'I18nManager':
     case 'InteractionManager':
     case 'Keyboard':
+    case 'LayoutAnimation':
     case 'Linking':
     case 'NetInfo':
     case 'PanResponder':
