@@ -1,0 +1,1 @@
+Object.defineProperty(exports,"__esModule",{value:true});var LayoutAnimation={Types:{},Properties:{},configureNext:function configureNext(){},easeInEaseOut:function easeInEaseOut(){}};exports.default=LayoutAnimation;
