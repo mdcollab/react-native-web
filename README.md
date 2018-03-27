@@ -1,5 +1,9 @@
 # React Native for Web
 
+## Carbon Special
+- After you applied your changes, run `yarn build`, then commit and push the `dist` folder. Use that commit hash in https://github.com/mdcollab/mdcollab/blob/master/hib/package.json#L85
+
+
 [![Build Status][travis-image]][travis-url]
 [![npm version][npm-image]][npm-url]
 
