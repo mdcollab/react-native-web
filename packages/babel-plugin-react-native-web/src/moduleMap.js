@@ -21,6 +21,7 @@ module.exports = {
   InteractionManager: true,
   Keyboard: true,
   KeyboardAvoidingView: true,
+  LayoutAnimation: true,
   Linking: true,
   ListView: true,
   Modal: true,
