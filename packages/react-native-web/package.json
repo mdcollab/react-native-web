@@ -25,6 +25,7 @@
     "inline-style-prefixer": "^5.0.3",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.6.0",
+    "react-textarea-autosize": "^6.0.3",
     "react-timer-mixin": "^0.13.4"
   },
   "peerDependencies": {

@@ -18,6 +18,7 @@ import css from '../StyleSheet/css';
 import findNodeHandle from '../findNodeHandle';
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import TextInputStylePropTypes from './TextInputStylePropTypes';
+import TextareaAutosize from 'react-textarea-autosize';
 import TextInputState from '../../modules/TextInputState';
 import ViewPropTypes from '../ViewPropTypes';
 import { any, bool, func, number, oneOf, shape, string } from 'prop-types';
@@ -97,6 +98,7 @@ class TextInput extends Component<*> {
     ]),
     maxFontSizeMultiplier: number,
     maxLength: number,
+    maxNumberOfLines: number,
     multiline: bool,
     numberOfLines: number,
     onBlur: func,
@@ -177,6 +179,7 @@ class TextInput extends Component<*> {
       autoCorrect,
       editable,
       keyboardType,
+      maxNumberOfLines,
       multiline,
       numberOfLines,
       returnKeyType,
@@ -253,7 +256,7 @@ class TextInput extends Component<*> {
       type = 'password';
     }
 
-    const component = multiline ? 'textarea' : 'input';
+    const component = multiline ? TextareaAutosize : 'input';
 
     Object.assign(otherProps, {
       // Browser's treat autocomplete "off" as "on"
@@ -275,7 +278,8 @@ class TextInput extends Component<*> {
     });
 
     if (multiline) {
-      otherProps.rows = numberOfLines;
+      otherProps.maxRows = maxNumberOfLines || numberOfLines;
+      otherProps.minRows = numberOfLines;
     } else {
       otherProps.type = type;
     }
