@@ -1,7 +1,7 @@
 {
   "private": true,
-  "version": "0.5.3",
-  "name": "react-native-web-monorepo",
+  "version": "0.0.1",
+  "name": "@carbonhealth1/react-native-web-monorepo",
   "scripts": {
     "clean": "del ./packages/*/dist",
     "compile": "yarn clean && cd packages/react-native-web && babel src --out-dir dist --ignore \"**/__tests__\"",
