@@ -19,6 +19,7 @@ import findNodeHandle from '../findNodeHandle';
 import StyleSheet from '../StyleSheet';
 import StyleSheetPropType from '../../modules/StyleSheetPropType';
 import TextInputStylePropTypes from './TextInputStylePropTypes';
+import TextareaAutosize from 'react-textarea-autosize';
 import TextInputState from '../../modules/TextInputState';
 import ViewPropTypes from '../ViewPropTypes';
 import { any, bool, func, number, oneOf, shape, string } from 'prop-types';
@@ -93,6 +94,7 @@ class TextInput extends Component<*> {
       'web-search'
     ]),
     maxLength: number,
+    maxNumberOfLines: number,
     multiline: bool,
     numberOfLines: number,
     onBlur: func,
@@ -172,6 +174,7 @@ class TextInput extends Component<*> {
       autoCorrect,
       editable,
       keyboardType,
+      maxNumberOfLines,
       multiline,
       numberOfLines,
       secureTextEntry,
@@ -235,7 +238,7 @@ class TextInput extends Component<*> {
       type = 'password';
     }
 
-    const component = multiline ? 'textarea' : 'input';
+    const component = multiline ? TextareaAutosize: 'input';
 
     Object.assign(otherProps, {
       autoCorrect: autoCorrect ? 'on' : 'off',
@@ -253,7 +256,8 @@ class TextInput extends Component<*> {
     });
 
     if (multiline) {
-      otherProps.rows = numberOfLines;
+      otherProps.maxRows = maxNumberOfLines || numberOfLines;
+      otherProps.minRows = numberOfLines;
     } else {
       otherProps.type = type;
     }
