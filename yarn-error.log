@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node/9.8.0/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js release 100.0.2
+  /usr/local/Cellar/node/9.8.0/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js release 100.0.3
 
 PATH: 
   /anaconda3/bin:/Users/tom/.rbenv/shims:/Users/tom/.opam/system/bin:/Users/tom/Library/Haskell/bin:/Users/tom/code/third/elastic-mapreduce-cli:/Users/tom/ex/hadoop-1.0.3/bin:/Users/tom/ex/hive-0.11.0.2.0.4.0-38/bin:/opt/twitter/Cellar/scala210/2.10.4/bin:/Users/tom/Library/Android/sdk/tools:/Users/tom/Library/Android/sdk/platform-tools:/Users/tom/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
@@ -16,7 +16,7 @@ Platform:
 npm manifest: 
   {
     "private": true,
-    "version": "100.0.2",
+    "version": "100.0.3",
     "name": "@carbonhealth1/react-native-web-monorepo",
     "scripts": {
       "clean": "del ./packages/*/dist",
@@ -8496,7 +8496,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c node ./scripts/release/publish.js 100.0.2
+  Arguments: -c node ./scripts/release/publish.js 100.0.3
   Directory: /Users/tom/code/react-native-web
   Output:
   
