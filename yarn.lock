@@ -8282,6 +8282,12 @@ react-test-renderer@^16.5.1:
     react-is "^16.5.1"
     schedule "^0.4.0"
 
+react-textarea-autosize@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-6.0.3.tgz#f5762f61f0e1b78bc309ec23475d49f4915f9198"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-timer-mixin@^0.13.3:
   version "0.13.3"
   resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.3.tgz#0da8b9f807ec07dc3e854d082c737c65605b3d22"
