@@ -1,5 +1,5 @@
 {
-  "name": "@carbonhealth1/babel-plugin-react-native-web",
+  "name": "@carbonhealth3/babel-plugin-react-native-web",
   "version": "100.0.4",
   "description": "Babel plugin for React Native for Web",
   "main": "index.js",
