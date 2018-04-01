@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "benchmarks",
-  "version": "100.0.1",
+  "version": "100.0.2",
   "scripts": {
     "build": "mkdir -p dist && cp -f index.html dist/index.html && webpack --config ./webpack.config.js",
     "release": "yarn build && git checkout gh-pages && rm -rf ../../benchmarks && mv dist ../../benchmarks && git add -A && git commit -m \"Benchmarks deploy\" && git push origin gh-pages && git checkout -"
