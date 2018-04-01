@@ -10,11 +10,11 @@
  */
 'use strict';
 
-const MetroListView = require('MetroListView');
-const Platform = require('Platform');
-const React = require('React');
-const ScrollView = require('ScrollView');
-const VirtualizedSectionList = require('VirtualizedSectionList');
+const MetroListView = require('../FlatList/MetroListView');
+const Platform = require('../Platform').default;
+const React = require('react');
+const ScrollView = require('../ScrollView').default;
+const VirtualizedSectionList = require('./VirtualizedSectionList');
 
 import type {ViewToken} from 'ViewabilityHelper';
 import type {Props as VirtualizedSectionListProps} from 'VirtualizedSectionList';

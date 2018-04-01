@@ -10,27 +10,26 @@
  */
 'use strict';
 
-const Batchinator = require('Batchinator');
-const FillRateHelper = require('FillRateHelper');
+const Batchinator = require('./Batchinator');
+const FillRateHelper = require('./FillRateHelper');
 const PropTypes = require('prop-types');
-const React = require('React');
-const ReactNative = require('ReactNative');
-const RefreshControl = require('RefreshControl');
-const ScrollView = require('ScrollView');
-const StyleSheet = require('StyleSheet');
-const UIManager = require('UIManager');
-const View = require('View');
-const ViewabilityHelper = require('ViewabilityHelper');
+const React = require('react');
+const ReactNative = require('react-native');
+const RefreshControl = require('../RefreshControl').default;
+const ScrollView = require('../ScrollView').default;
+const StyleSheet = require('../StyleSheet').default;
+const UIManager = require('../UIManager').default;
+const View = require('../View').default;
+const ViewabilityHelper = require('./ViewabilityHelper');
 
-const flattenStyle = require('flattenStyle');
-const infoLog = require('infoLog');
+const flattenStyle = require('../StyleSheet/flattenStyle').default;
 const invariant = require('fbjs/lib/invariant');
 /* $FlowFixMe(>=0.54.0 site=react_native_oss) This comment suppresses an error
  * found when Flow v0.54 was deployed. To see the error delete this comment and
  * run Flow. */
 const warning = require('fbjs/lib/warning');
 
-const {computeWindowedRenderLimits} = require('VirtualizeUtils');
+const {computeWindowedRenderLimits} = require('./VirtualizeUtils');
 
 import type {DangerouslyImpreciseStyleProp} from 'StyleSheet';
 import type {
@@ -1294,12 +1293,6 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       contentLength > 5 * visibleLength &&
       !this._hasWarned.perf
     ) {
-      infoLog(
-        'VirtualizedList: You have a large list that is slow to update - make sure your ' +
-          'renderItem function renders components that follow React performance best practices ' +
-          'like PureComponent, shouldComponentUpdate, etc.',
-        {dt, prevDt: this._scrollMetrics.dt, contentLength},
-      );
       this._hasWarned.perf = true;
     }
     this._scrollMetrics = {
