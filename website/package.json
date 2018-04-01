@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "website",
-  "version": "100.0.4",
+  "version": "100.0.5",
   "scripts": {
     "build": "build-storybook -o ./dist -c ./storybook/.storybook",
     "start": "start-storybook -p 9001 -c ./storybook/.storybook",
