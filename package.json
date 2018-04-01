@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.0.1",
+  "version": "100.0.1",
   "name": "@carbonhealth1/react-native-web-monorepo",
   "scripts": {
     "clean": "del ./packages/*/dist",

@@ -1,6 +1,6 @@
 {
   "name": "@carbonhealth1/react-native-web",
-  "version": "0.0.1",
+  "version": "100.0.1",
   "description": "React Native for Web",
   "main": "dist/index.js",
   "files": [
