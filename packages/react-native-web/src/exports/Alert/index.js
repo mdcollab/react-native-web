@@ -51,38 +51,34 @@ const createMessageBox = () => {
   box.style.backgroundColor = 'white';
   box.style.maxWidth = '300px';
   box.style.fontSize = '14px';
+  box.style.fontFamily = 'Helvetica';
   // Clicking message box should not trigger onDismiss
   box.onclick = event => event.stopPropagation();
   return box;
 };
 
 const createTitleDiv = title => {
-  const titleDiv: HTMLHeadingElement = document.createElement('h2');
+  const titleDiv: HTMLHeadingElement = document.createElement('div');
   titleDiv.textContent = title || '';
   titleDiv.style.marginTop = '0';
   titleDiv.style.fontSize = '20px';
+  titleDiv.style.fontWeight = '500';
+  titleDiv.style.fontFamily = 'Helvetica';
   return titleDiv;
-};
-
-const createButtonsContainer = () => {
-  const buttonsContainer: HTMLElement = document.createElement('div');
-  buttonsContainer.style.display = 'flex';
-  buttonsContainer.style.justifyContent = 'space-between';
-  buttonsContainer.style.alignItems = 'center';
-  buttonsContainer.style.marginTop = '15px';
-  return buttonsContainer;
 };
 
 const createButton = button => {
   const buttonElement: HTMLButtonElement = document.createElement('button');
   buttonElement.textContent = button.text ? button.text : '';
+  buttonElement.style.display = 'block';
+  buttonElement.style.marginTop = '12px';
   buttonElement.style.color = '#3897fe';
   buttonElement.style.backgroundColor = 'transparent';
   buttonElement.style.border = 'none';
-  buttonElement.style.textTransform = 'uppercase';
   buttonElement.style.cursor = 'pointer';
   buttonElement.style.fontSize = '14px';
   buttonElement.style.fontWeight = '500';
+  buttonElement.style.fontFamily = 'Helvetica';
   return buttonElement;
 };
 
@@ -100,30 +96,21 @@ const alert = (
   const box = createMessageBox();
   const titleDiv = createTitleDiv(title);
   const messageDiv = document.createTextNode(message || '');
-  const buttonsContainer = createButtonsContainer();
-  const leftContainer = document.createElement('div');
-  const rightContainer = document.createElement('div');
+  const buttonsContainer: HTMLElement = document.createElement('div');
 
   container.appendChild(box);
   box.appendChild(titleDiv);
   box.appendChild(messageDiv);
   box.appendChild(buttonsContainer);
-  buttonsContainer.appendChild(leftContainer);
-  buttonsContainer.appendChild(rightContainer);
 
   buttons &&
-    buttons.forEach((button, index, array) => {
-      const isNeutralButton = array.length === 3 && index === 0;
+    buttons.forEach(button => {
       const buttonElement = createButton(button);
       buttonElement.onclick = () => {
         button.onPress && button.onPress();
         container.remove();
       };
-      if (isNeutralButton) {
-        leftContainer.appendChild(buttonElement);
-      } else {
-        rightContainer.appendChild(buttonElement);
-      }
+      buttonsContainer.appendChild(buttonElement);
     });
 
   document.body && document.body.appendChild(container);
