@@ -4,14 +4,14 @@ import createElement from '..';
 import { shallow, render } from 'enzyme';
 
 describe('modules/createElement', () => {
-  test('it renders different DOM elements', () => {
+  test('renders different DOM elements', () => {
     let component = render(createElement('span'));
     expect(component).toMatchSnapshot();
     component = render(createElement('main'));
     expect(component).toMatchSnapshot();
   });
 
-  test('it normalizes event.nativeEvent', done => {
+  test('normalizes event.nativeEvent', done => {
     const onClick = e => {
       e.nativeEvent.timestamp = 1496876171255;
       expect(e.nativeEvent).toMatchSnapshot();
