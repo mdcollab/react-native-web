@@ -26,9 +26,9 @@ const Linking = {
   getInitialURL(): Promise<string> {
     return Promise.resolve(initialURL);
   },
-  openURL(url: string): Promise<Object | void> {
+  openURL(url: string, target: string = '_blank'): Promise<Object | void> {
     try {
-      open(url);
+      open(url, target);
       return Promise.resolve();
     } catch (e) {
       return Promise.reject(e);
@@ -36,9 +36,9 @@ const Linking = {
   }
 };
 
-const open = url => {
+const open = (url: string, target: string) => {
   const anchor = document.createElement('a');
-  anchor.target = '_blank'; // :(
+  anchor.target = target; // :(
   anchor.rel = 'noopener';
   anchor.href = url;
   anchor.click();
