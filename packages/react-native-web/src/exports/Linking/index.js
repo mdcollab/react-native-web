@@ -14,8 +14,12 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 const initialURL = canUseDOM ? window.location.href : '';
 
 const Linking = {
-  addEventListener() {},
-  removeEventListener() {},
+  addEventListener(eventType: string, func: Function) {
+    eventType === 'url' && window.addEventListener('hashchange', func, false);
+  },
+  removeEventListener(eventType: string, func: Function) {
+    eventType === 'url' && window.removeEventListener('hashchange', func);
+  },
   canOpenURL(): Promise<boolean> {
     return Promise.resolve(true);
   },
