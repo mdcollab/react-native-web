@@ -86,13 +86,18 @@ const alert = (
   title: ?string,
   message: ?string,
   buttons: ?Buttons = [{ text: 'OK' }],
-  options: ?Options = { cancelable: true }
+  options: ?Options = { cancelable: false }
 ) => {
   /**
    * Alert dialog is a plain DOM element instead of a React element.
    * It's not a React element because this is a static method.
+   *
+   * make alert not be cancelable on the web. there an issue related to click firing after
+   * the touch event (which dismisses the alert right away on the mobile web browser), even though
+   * this commit https://github.com/necolas/react-native-web/commit/edc99e79eb8790d70e0f8be406d68058f13adf08 says it is fixed.
+   * TODO: consider changing this behavior after validating the issue has been fixed
    */
-  const container = createContainer(options);
+  const container = createContainer(options? {...options, cancelable: false}: {cancelable: false});
   const box = createMessageBox();
   const titleDiv = createTitleDiv(title);
   const messageDiv = document.createTextNode(message || '');
