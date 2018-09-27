@@ -9,16 +9,19 @@
  * @flow
  */
 
+import memoize from 'memoizee';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
 const initialURL = canUseDOM ? window.location.href : '';
 
+const withRenamedField = memoize(f => (event: Object) => f({...event, url: event.newURL}));
+
 const Linking = {
   addEventListener(eventType: string, func: Function) {
-    eventType === 'url' && window.addEventListener('hashchange', func, false);
+    eventType === 'url' && window.addEventListener('hashchange', withRenamedField(func), false);
   },
   removeEventListener(eventType: string, func: Function) {
-    eventType === 'url' && window.removeEventListener('hashchange', func);
+    eventType === 'url' && window.removeEventListener('hashchange', withRenamedField(func));
   },
   canOpenURL(): Promise<boolean> {
     return Promise.resolve(true);
