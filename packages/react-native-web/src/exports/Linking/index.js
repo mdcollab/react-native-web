@@ -44,7 +44,9 @@ const open = (url: string, target: string) => {
   anchor.target = target; // :(
   anchor.rel = 'noopener';
   anchor.href = url;
+  document.body.appendChild(anchor);
   anchor.click();
+  document.body.removeChild(anchor);
 };
 
 export default Linking;
