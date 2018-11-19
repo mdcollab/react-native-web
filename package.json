@@ -18,10 +18,8 @@
     "jest": "BABEL_ENV=commonjs jest --config ./scripts/jest/config.js",
     "lint": "yarn lint:check --fix",
     "lint:check": "eslint packages scripts",
-    "precommit": "lint-staged",
-    "prerelease": "yarn test && yarn compile && yarn compile:commonjs",
-    "release": "node ./scripts/release/publish.js",
-    "postrelease": "yarn benchmarks:release && yarn examples:release && yarn website:release",
+    "prerelease": "yarn compile && yarn compile:commonjs",
+    "release": "cd packages/react-native-web && yarn publish",
     "test": "yarn flow && yarn lint:check && yarn jest --runInBand"
   },
   "devDependencies": {
