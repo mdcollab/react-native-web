@@ -10,6 +10,7 @@
 
 import StyleSheet from '../StyleSheet';
 import View from '../View';
+import Alert from '../Alert';
 import { any, node } from 'prop-types';
 import React, { Component, type ComponentType } from 'react';
 
@@ -65,6 +66,7 @@ export default class AppContainer extends Component<Props, State> {
     return (
       <View pointerEvents="box-none" style={styles.appContainer}>
         {innerView}
+        <Alert.AlertView />
       </View>
     );
   }
