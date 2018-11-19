@@ -23,6 +23,7 @@
     "fbjs": "^1.0.0",
     "hyphenate-style-name": "^1.0.2",
     "inline-style-prefixer": "^5.0.3",
+    "memoizee": "^0.4.14",
     "normalize-css-color": "^1.0.2",
     "prop-types": "^15.6.0",
     "react-textarea-autosize": "^6.0.3",
