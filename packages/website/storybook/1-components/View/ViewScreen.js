@@ -119,6 +119,12 @@ const ViewScreen = () => (
         ]}
       />
 
+      <DocItem
+        name="nativeID"
+        typeInfo="?string"
+        description="Used to locate this view from any native DOM code, or to define accessibility relationships. This is rendered to the native 'id' DOM attribute"
+      />
+
       <DocItem name="onBlur" typeInfo="?function" />
       <DocItem name="onContextMenu" typeInfo="?function" />
       <DocItem name="onFocus" typeInfo="?function" />
@@ -341,8 +347,8 @@ const stylePropTypes = [
   },
   {
     label: 'web',
-    name: 'animationName',
-    typeInfo: 'string | Array<Object>'
+    name: 'animationKeyframes',
+    typeInfo: 'Array<Object|string>'
   },
   {
     label: 'web',
@@ -726,13 +732,23 @@ const stylePropTypes = [
   },
   {
     label: 'web',
-    name: 'outline',
+    name: 'outlineColor',
+    typeInfo: 'color'
+  },
+  {
+    label: 'web',
+    name: 'outlineOffset',
+    typeInfo: 'number | string'
+  },
+  {
+    label: 'web',
+    name: 'outlineStyle',
     typeInfo: 'string'
   },
   {
     label: 'web',
-    name: 'outlineColor',
-    typeInfo: 'color'
+    name: 'outlineWidth',
+    typeInfo: 'number | string'
   },
   {
     name: 'overflow',

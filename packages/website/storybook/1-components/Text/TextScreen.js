@@ -117,6 +117,12 @@ const TextScreen = () => (
       />
 
       <DocItem
+        name="nativeID"
+        typeInfo="?string"
+        description="Used to locate this view from any native DOM code, or to define accessibility relationships. This is rendered to the native 'id' DOM attribute"
+      />
+
+      <DocItem
         name="numberOfLines"
         typeInfo="?number"
         description="Truncates the text with an ellipsis after this many lines. Currently only supports `1`."
@@ -260,7 +266,6 @@ const stylePropTypes = [
     typeInfo: 'number | string'
   },
   {
-    label: 'web',
     name: 'textTransform',
     typeInfo: 'string'
   },
@@ -273,6 +278,12 @@ const stylePropTypes = [
     name: 'whiteSpace',
     typeInfo: 'string'
   },
+  {
+    label: 'web',
+    name: 'wordBreak',
+    typeInfo: 'enum("normal", "break-all", "break-word", "keep-all")'
+  },
+
   {
     label: 'web',
     name: 'wordWrap',

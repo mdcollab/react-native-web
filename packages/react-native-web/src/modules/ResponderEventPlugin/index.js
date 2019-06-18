@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) Nicolas Gallagher.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @noflow
+ */
+
 // based on https://github.com/facebook/react/pull/4303/files
 
 import normalizeNativeEvent from '../normalizeNativeEvent';
@@ -44,6 +53,9 @@ if (!ResponderEventPlugin.eventTypes.responderMove.dependencies) {
 }
 
 let lastActiveTouchTimestamp = null;
+// The length of time after a touch that we ignore the browser's emulated mouse events
+// https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
+const EMULATED_MOUSE_THERSHOLD_MS = 1000;
 
 const originalExtractEvents = ResponderEventPlugin.extractEvents;
 ResponderEventPlugin.extractEvents = (topLevelType, targetInst, nativeEvent, nativeEventTarget) => {
@@ -55,7 +67,7 @@ ResponderEventPlugin.extractEvents = (topLevelType, targetInst, nativeEvent, nat
     lastActiveTouchTimestamp = Date.now();
   } else if (lastActiveTouchTimestamp && eventType.indexOf('mouse') > -1) {
     const now = Date.now();
-    shouldSkipMouseAfterTouch = now - lastActiveTouchTimestamp < 250;
+    shouldSkipMouseAfterTouch = now - lastActiveTouchTimestamp < EMULATED_MOUSE_THERSHOLD_MS;
   }
 
   if (

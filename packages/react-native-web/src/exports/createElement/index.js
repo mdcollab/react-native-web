@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Nicolas Gallagher.
+ * Copyright (c) Nicolas Gallagher.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -9,14 +9,12 @@
 
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import createDOMProps from '../../modules/createDOMProps';
+import { injectEventPluginsByName } from 'react-dom/unstable-native-dependencies';
 import normalizeNativeEvent from '../../modules/normalizeNativeEvent';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ResponderEventPlugin from '../../modules/ResponderEventPlugin';
 
-const { EventPluginHub } = ReactDOM.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-
-EventPluginHub.injection.injectEventPluginsByName({
+injectEventPluginsByName({
   ResponderEventPlugin
 });
 
@@ -48,7 +46,7 @@ const eventHandlerNames = {
 const adjustProps = domProps => {
   const { onClick, onResponderRelease, role } = domProps;
 
-  const isButtonRole = role === 'button';
+  const isButtonLikeRole = AccessibilityUtil.buttonLikeRoles[role];
   const isDisabled = AccessibilityUtil.isDisabled(domProps);
   const isLinkRole = role === 'link';
 
@@ -56,7 +54,7 @@ const adjustProps = domProps => {
     const prop = domProps[propName];
     const isEventHandler = typeof prop === 'function' && eventHandlerNames[propName];
     if (isEventHandler) {
-      if (isButtonRole && isDisabled) {
+      if (isButtonLikeRole && isDisabled) {
         domProps[propName] = undefined;
       } else {
         // TODO: move this out of the render path
@@ -80,8 +78,8 @@ const adjustProps = domProps => {
     };
   }
 
-  // Button role should trigger 'onClick' if SPACE or ENTER keys are pressed.
-  if (isButtonRole && !isDisabled) {
+  // Button-like roles should trigger 'onClick' if SPACE or ENTER keys are pressed.
+  if (isButtonLikeRole && !isDisabled) {
     domProps.onKeyPress = function(e) {
       if (!e.isDefaultPrevented() && (e.which === 13 || e.which === 32)) {
         e.preventDefault();

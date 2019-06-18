@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-present, Nicolas Gallagher.
+ * Copyright (c) Nicolas Gallagher.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -122,6 +122,8 @@ export default class ScrollViewBase extends Component<*> {
       ...other
     } = this.props;
 
+    const hideScrollbar =
+      showsHorizontalScrollIndicator === false || showsVerticalScrollIndicator === false;
     return (
       <View
         {...other}
@@ -129,7 +131,11 @@ export default class ScrollViewBase extends Component<*> {
         onTouchMove={this._createPreventableScrollHandler(this.props.onTouchMove)}
         onWheel={this._createPreventableScrollHandler(this.props.onWheel)}
         ref={this._setViewRef}
-        style={StyleSheet.compose(style, !scrollEnabled && styles.scrollDisabled)}
+        style={[
+          style,
+          !scrollEnabled && styles.scrollDisabled,
+          hideScrollbar && styles.hideScrollbar
+        ]}
       />
     );
   }
@@ -201,5 +207,8 @@ export default class ScrollViewBase extends Component<*> {
 const styles = StyleSheet.create({
   scrollDisabled: {
     touchAction: 'none'
+  },
+  hideScrollbar: {
+    scrollbarWidth: 'none'
   }
 });

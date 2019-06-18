@@ -1,6 +1,6 @@
 /**
- * Copyright (c) 2016-present, Nicolas Gallagher.
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Nicolas Gallagher.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,6 +10,7 @@
 
 import applyNativeMethods from '../../modules/applyNativeMethods';
 import createElement from '../createElement';
+import css from '../StyleSheet/css';
 import { getAssetByID } from '../../modules/AssetRegistry';
 import resolveShadowValue from '../StyleSheet/resolveShadowValue';
 import ImageLoader from '../../modules/ImageLoader';
@@ -129,10 +130,23 @@ class Image extends Component<*, State> {
   }
 
   static prefetch(uri) {
-    return ImageLoader.prefetch(uri);
+    return ImageLoader.prefetch(uri).then(() => {
+      // Add the uri to the cache so it can be immediately displayed when used
+      // but also immediately remove it to correctly reflect that it has no active references
+      ImageUriCache.add(uri);
+      ImageUriCache.remove(uri);
+    });
   }
 
-  static resizeMode = ImageResizeMode;
+  static queryCache(uris) {
+    const result = {};
+    uris.forEach(u => {
+      if (ImageUriCache.has(u)) {
+        result[u] = 'disk/memory';
+      }
+    });
+    return Promise.resolve(result);
+  }
 
   _filterId = 0;
   _imageRef = null;
@@ -163,11 +177,14 @@ class Image extends Component<*, State> {
   componentDidUpdate(prevProps) {
     const prevUri = resolveAssetUri(prevProps.source);
     const uri = resolveAssetUri(this.props.source);
+    const hasDefaultSource = this.props.defaultSource != null;
     if (prevUri !== uri) {
       ImageUriCache.remove(prevUri);
       const isPreviouslyLoaded = ImageUriCache.has(uri);
       isPreviouslyLoaded && ImageUriCache.add(uri);
-      this._updateImageState(getImageState(uri, isPreviouslyLoaded));
+      this._updateImageState(getImageState(uri, isPreviouslyLoaded), hasDefaultSource);
+    } else if (hasDefaultSource && prevProps.defaultSource !== this.props.defaultSource) {
+      this._updateImageState(this._imageState, hasDefaultSource);
     }
     if (this._imageState === STATUS_PENDING) {
       this._createImageLoader();
@@ -256,10 +273,10 @@ class Image extends Component<*, State> {
     const hiddenImage = displayImageUri
       ? createElement('img', {
           alt: accessibilityLabel || '',
+          classList: [classes.accessibilityImage],
           draggable: draggable || false,
           ref: this._setImageRef,
-          src: displayImageUri,
-          style: styles.accessibilityImage
+          src: displayImageUri
         })
       : null;
 
@@ -365,8 +382,8 @@ class Image extends Component<*, State> {
   }
 
   _onLoadStart() {
-    const { onLoadStart } = this.props;
-    this._updateImageState(STATUS_LOADING);
+    const { defaultSource, onLoadStart } = this.props;
+    this._updateImageState(STATUS_LOADING, defaultSource != null);
     if (onLoadStart) {
       onLoadStart();
     }
@@ -376,11 +393,12 @@ class Image extends Component<*, State> {
     this._imageRef = ref;
   };
 
-  _updateImageState(status) {
+  _updateImageState(status: ?string, hasDefaultSource: ?boolean = false) {
     this._imageState = status;
     const shouldDisplaySource =
-      this._imageState === STATUS_LOADED || this._imageState === STATUS_LOADING;
-    // only triggers a re-render when the image is loading (to support PJEG), loaded, or failed
+      this._imageState === STATUS_LOADED ||
+      (this._imageState === STATUS_LOADING && !hasDefaultSource);
+    // only triggers a re-render when the image is loading and has no default image (to support PJPEG), loaded, or failed
     if (shouldDisplaySource !== this.state.shouldDisplaySource) {
       if (this._isMounted) {
         this.setState(() => ({ shouldDisplaySource }));
@@ -388,6 +406,16 @@ class Image extends Component<*, State> {
     }
   }
 }
+
+const classes = css.create({
+  accessibilityImage: {
+    ...StyleSheet.absoluteFillObject,
+    height: '100%',
+    opacity: 0,
+    width: '100%',
+    zIndex: -1
+  }
+});
 
 const styles = StyleSheet.create({
   root: {
@@ -405,13 +433,6 @@ const styles = StyleSheet.create({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     height: '100%',
-    width: '100%',
-    zIndex: -1
-  },
-  accessibilityImage: {
-    ...StyleSheet.absoluteFillObject,
-    height: '100%',
-    opacity: 0,
     width: '100%',
     zIndex: -1
   }

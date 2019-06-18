@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-present, Nicolas Gallagher.
+ * Copyright (c) Nicolas Gallagher.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -67,6 +67,7 @@ class Switch extends Component<*> {
 
   render() {
     const {
+      accessibilityLabel,
       activeThumbColor,
       activeTrackColor,
       disabled,
@@ -115,6 +116,7 @@ class Switch extends Component<*> {
     ];
 
     const nativeControl = createElement('input', {
+      accessibilityLabel,
       checked: value,
       disabled: disabled,
       onBlur: this._handleFocusState,

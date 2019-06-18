@@ -35,16 +35,10 @@ describe('modules/createDOMProps', () => {
         expect(createProps({ accessibilityRole, disabled: true })).toEqual(
           expect.objectContaining({ 'aria-disabled': true, disabled: true, tabIndex: '-1' })
         );
-        expect(createProps({ accessibilityRole, 'aria-disabled': true })).toEqual(
-          expect.objectContaining({ 'aria-disabled': true, disabled: true, tabIndex: '-1' })
-        );
       });
 
       test('when "disabled" is false', () => {
         expect(createProps({ accessibilityRole, disabled: false })).toEqual(
-          expect.objectContaining({ 'data-focusable': true })
-        );
-        expect(createProps({ accessibilityRole, 'aria-disabled': false })).toEqual(
           expect.objectContaining({ 'data-focusable': true })
         );
       });
@@ -65,9 +59,7 @@ describe('modules/createDOMProps', () => {
       });
     });
 
-    describe('"accessibilityRole" of "button"', () => {
-      const accessibilityRole = 'button';
-
+    const testFocusableRole = accessibilityRole => {
       test('default case', () => {
         expect(createProps({ accessibilityRole })).toEqual(
           expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
@@ -90,16 +82,10 @@ describe('modules/createDOMProps', () => {
         expect(createProps({ accessibilityRole, disabled: true })).toEqual(
           expect.objectContaining({ 'aria-disabled': true, disabled: true })
         );
-        expect(createProps({ accessibilityRole, 'aria-disabled': true })).toEqual(
-          expect.objectContaining({ 'aria-disabled': true, disabled: true })
-        );
       });
 
       test('when "disabled" is false', () => {
         expect(createProps({ accessibilityRole, disabled: false })).toEqual(
-          expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
-        );
-        expect(createProps({ accessibilityRole, 'aria-disabled': false })).toEqual(
           expect.objectContaining({ 'data-focusable': true, tabIndex: '0' })
         );
       });
@@ -118,6 +104,14 @@ describe('modules/createDOMProps', () => {
           })
         ).not.toEqual(expect.objectContaining({ 'data-focusable': true, tabIndex: '0' }));
       });
+    };
+
+    describe('"accessibilityRole" of "button"', () => {
+      testFocusableRole('button');
+    });
+
+    describe('"accessibilityRole" of "menuitem"', () => {
+      testFocusableRole('menuitem');
     });
 
     describe('with unfocusable accessibilityRole', () => {
@@ -158,12 +152,17 @@ describe('modules/createDOMProps', () => {
     expect(props['aria-live']).toEqual('off');
   });
 
-  describe('prop "accessibilityRole"', () => {
-    test('does not become "role" when value is "label"', () => {
-      const accessibilityRole = 'label';
-      const props = createProps({ accessibilityRole });
-      expect(props.role).toBeUndefined();
-    });
+  test('prop "accessibilityRole" becomes "role"', () => {
+    const accessibilityRole = 'button';
+    const props = createProps({ accessibilityRole });
+    expect(props.role).toEqual('button');
+  });
+
+  test('prop "accessibilityStates" becomes ARIA states', () => {
+    const accessibilityStates = ['disabled', 'selected'];
+    const props = createProps({ accessibilityStates });
+    expect(props['aria-disabled']).toEqual(true);
+    expect(props['aria-selected']).toEqual(true);
   });
 
   test('prop "className" is preserved', () => {
@@ -177,6 +176,12 @@ describe('modules/createDOMProps', () => {
     expect(props['aria-hidden']).toEqual(true);
   });
 
+  test('prop "nativeID" becomes "id"', () => {
+    const nativeID = 'Example.nativeID';
+    const props = createProps({ nativeID });
+    expect(props.id).toEqual(nativeID);
+  });
+
   test('prop "testID" becomes "data-testid"', () => {
     const testID = 'Example.testID';
     const props = createProps({ testID });
@@ -188,23 +193,15 @@ describe('modules/createDOMProps', () => {
     expect(props.rel).toMatchSnapshot();
   });
 
-  test('includes reset styles for "a" elements', () => {
-    const props = createDOMProps('a');
-    expect(props.className).toMatchSnapshot();
+  test('includes cursor style for pressable roles', () => {
+    expect(createDOMProps('span', { accessibilityRole: 'link' }).className).toMatchSnapshot();
+    expect(createDOMProps('span', { accessibilityRole: 'button' }).className).toMatchSnapshot();
   });
 
-  test('includes reset styles for "button" elements', () => {
-    const props = createDOMProps('button');
-    expect(props.className).toMatchSnapshot();
-  });
-
-  test('includes cursor style for "button" role', () => {
-    const props = createDOMProps('span', { accessibilityRole: 'button' });
-    expect(props.className).toMatchSnapshot();
-  });
-
-  test('includes reset styles for "ul" elements', () => {
-    const props = createDOMProps('ul');
-    expect(props.className).toMatchSnapshot();
+  test('includes base reset style for browser-styled elements', () => {
+    expect(createDOMProps('a').className).toMatchSnapshot();
+    expect(createDOMProps('button').className).toMatchSnapshot();
+    expect(createDOMProps('li').className).toMatchSnapshot();
+    expect(createDOMProps('ul').className).toMatchSnapshot();
   });
 });

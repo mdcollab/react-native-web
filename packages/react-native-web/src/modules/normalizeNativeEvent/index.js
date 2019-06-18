@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Nicolas Gallagher.
+ * Copyright (c) Nicolas Gallagher.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,17 +7,10 @@
  * @flow
  */
 
+import getBoundingClientRect from '../getBoundingClientRect';
+
 const emptyArray = [];
 const emptyFunction = () => {};
-
-const getRect = node => {
-  if (node) {
-    const isElement = node.nodeType === 1 /* Node.ELEMENT_NODE */;
-    if (isElement && typeof node.getBoundingClientRect === 'function') {
-      return node.getBoundingClientRect();
-    }
-  }
-};
 
 // Mobile Safari re-uses touch objects, so we copy the properties we want and normalize the identifier
 const normalizeTouches = touches => {
@@ -35,13 +28,13 @@ const normalizeTouches = touches => {
       clientY: touch.clientY,
       force: touch.force,
       get locationX() {
-        rect = rect || getRect(touch.target);
+        rect = rect || getBoundingClientRect(touch.target);
         if (rect) {
           return touch.pageX - rect.left;
         }
       },
       get locationY() {
-        rect = rect || getRect(touch.target);
+        rect = rect || getBoundingClientRect(touch.target);
         if (rect) {
           return touch.pageY - rect.top;
         }
@@ -78,6 +71,7 @@ function normalizeTouchEvent(nativeEvent) {
     typeof nativeEvent.stopPropagation === 'function'
       ? nativeEvent.stopPropagation.bind(nativeEvent)
       : emptyFunction;
+  const singleChangedTouch = changedTouches[0];
 
   const event = {
     _normalized: true,
@@ -85,11 +79,15 @@ function normalizeTouchEvent(nativeEvent) {
     cancelable: nativeEvent.cancelable,
     changedTouches,
     defaultPrevented: nativeEvent.defaultPrevented,
-    identifier: undefined,
-    locationX: undefined,
-    locationY: undefined,
-    pageX: nativeEvent.pageX,
-    pageY: nativeEvent.pageY,
+    identifier: singleChangedTouch ? singleChangedTouch.identifier : undefined,
+    get locationX() {
+      return singleChangedTouch ? singleChangedTouch.locationX : undefined;
+    },
+    get locationY() {
+      return singleChangedTouch ? singleChangedTouch.locationY : undefined;
+    },
+    pageX: singleChangedTouch ? singleChangedTouch.pageX : nativeEvent.pageX,
+    pageY: singleChangedTouch ? singleChangedTouch.pageY : nativeEvent.pageY,
     preventDefault,
     stopImmediatePropagation,
     stopPropagation,
@@ -101,14 +99,6 @@ function normalizeTouchEvent(nativeEvent) {
     type: nativeEvent.type,
     which: nativeEvent.which
   };
-
-  if (changedTouches[0]) {
-    event.identifier = changedTouches[0].identifier;
-    event.pageX = changedTouches[0].pageX;
-    event.pageY = changedTouches[0].pageY;
-    event.locationX = changedTouches[0].locationX;
-    event.locationY = changedTouches[0].locationY;
-  }
 
   return event;
 }
@@ -124,13 +114,13 @@ function normalizeMouseEvent(nativeEvent) {
       force: nativeEvent.force,
       identifier: 0,
       get locationX() {
-        rect = rect || getRect(nativeEvent.target);
+        rect = rect || getBoundingClientRect(nativeEvent.target);
         if (rect) {
           return nativeEvent.pageX - rect.left;
         }
       },
       get locationY() {
-        rect = rect || getRect(nativeEvent.target);
+        rect = rect || getBoundingClientRect(nativeEvent.target);
         if (rect) {
           return nativeEvent.pageY - rect.top;
         }
@@ -164,8 +154,12 @@ function normalizeMouseEvent(nativeEvent) {
     changedTouches: touches,
     defaultPrevented: nativeEvent.defaultPrevented,
     identifier: touches[0].identifier,
-    locationX: touches[0].locationX,
-    locationY: touches[0].locationY,
+    get locationX() {
+      return touches[0].locationX;
+    },
+    get locationY() {
+      return touches[0].locationY;
+    },
     pageX: nativeEvent.pageX,
     pageY: nativeEvent.pageY,
     preventDefault,

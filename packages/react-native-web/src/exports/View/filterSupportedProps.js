@@ -1,13 +1,24 @@
-const whitelist = {
+/**
+ * Copyright (c) Nicolas Gallagher.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @noflow
+ */
+
+const supportedProps = {
   accessibilityComponentType: true,
   accessibilityLabel: true,
   accessibilityLiveRegion: true,
   accessibilityRole: true,
+  accessibilityStates: true,
   accessibilityTraits: true,
   accessible: true,
   children: true,
   disabled: true,
   importantForAccessibility: true,
+  nativeID: true,
   onBlur: true,
   onContextMenu: true,
   onFocus: true,
@@ -56,6 +67,11 @@ const whitelist = {
   // unstable escape-hatches for web
   className: true,
   href: true,
+  itemID: true,
+  itemRef: true,
+  itemProp: true,
+  itemScope: true,
+  itemType: true,
   onClick: true,
   onClickCapture: true,
   rel: true,
@@ -66,7 +82,7 @@ const filterSupportedProps = props => {
   const safeProps = {};
   for (const prop in props) {
     if (props.hasOwnProperty(prop)) {
-      if (whitelist[prop] || prop.indexOf('aria-') === 0 || prop.indexOf('data-') === 0) {
+      if (supportedProps[prop] || prop.indexOf('aria-') === 0 || prop.indexOf('data-') === 0) {
         safeProps[prop] = props[prop];
       }
     }

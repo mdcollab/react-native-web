@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 
 /**
- * Copyright (c) 2016-present, Nicolas Gallagher.
- * Copyright (c) 2013-present, Facebook, Inc.
+ * Copyright (c) Nicolas Gallagher.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -696,9 +696,16 @@ const TouchableMixin = {
     const touch = TouchEventUtils.extractSingleTouch(e.nativeEvent);
     const pageX = touch && touch.pageX;
     const pageY = touch && touch.pageY;
-    const locationX = touch && touch.locationX;
-    const locationY = touch && touch.locationY;
-    this.pressInLocation = { pageX, pageY, locationX, locationY };
+    this.pressInLocation = {
+      pageX,
+      pageY,
+      get locationX() {
+        return touch && touch.locationX;
+      },
+      get locationY() {
+        return touch && touch.locationY;
+      }
+    };
   },
 
   _getDistanceBetweenPoints: function(aX: number, aY: number, bX: number, bY: number) {

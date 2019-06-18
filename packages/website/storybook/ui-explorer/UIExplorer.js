@@ -10,11 +10,20 @@ import insertBetween from './insertBetween';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-const Title = ({ children }) => <AppText style={styles.title}>{children}</AppText>;
+const Title = ({ children }) => (
+  <AppText accessibilityRole="heading" style={styles.title}>
+    {children}
+  </AppText>
+);
 
 export const Description = ({ children }) => (
   <AppText style={styles.description}>
-    {insertBetween(() => <Divider key={Math.random()} />, React.Children.toArray(children))}
+    {insertBetween(
+      () => (
+        <Divider key={Math.random()} />
+      ),
+      React.Children.toArray(children)
+    )}
   </AppText>
 );
 

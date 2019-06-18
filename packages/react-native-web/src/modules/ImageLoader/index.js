@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-present, Nicolas Gallagher.
+ * Copyright (c) Nicolas Gallagher.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -52,14 +52,14 @@ const ImageLoader = {
     image.onerror = onError;
     image.onload = e => {
       // avoid blocking the main thread
+      const onDecode = () => onLoad(e);
       if (typeof image.decode === 'function') {
-        image.decode().then(() => {
-          onLoad(e);
-        });
+        // Safari currently throws exceptions when decoding svgs.
+        // We want to catch that error and allow the load handler
+        // to be forwarded to the onLoad handler in this case
+        image.decode().then(onDecode, onDecode);
       } else {
-        setTimeout(() => {
-          onLoad(e);
-        }, 0);
+        setTimeout(onDecode, 0);
       }
     };
     image.src = uri;
