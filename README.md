@@ -1,7 +1,10 @@
 # React Native for Web
 
 ## Carbon Special
-- After you applied your changes, run `yarn build`, then commit and push the `dist` folder. Use that commit hash in https://github.com/mdcollab/mdcollab/blob/master/hib/package.json#L85
+- [first time only] `yarn login` with npm creds in 1pass (username `berrytj1`)
+- run `yarn release` from the root of your react-native-web checkout (working off of branch `current12` at the moment)
+- it will ask for the new version number and add a commit for it automatically
+- update the `@carbonhealth3/react-native-web` dep in hib
 
 
 [![npm version][package-badge]][package-url] [![Build Status][ci-badge]][ci-url] [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
