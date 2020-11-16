@@ -2,7 +2,8 @@
 
 ## Carbon Special
 - [first time only] `yarn login` with npm creds in 1pass (username `berrytj1`)
-- run `yarn release` from the root of your react-native-web checkout (working off of branch `current12` at the moment)
+- switch the current published branch: **current17** `@carbonhealth3/react-native-web@0.0.16`
+- run `yarn release` from the root of your react-native-web checkout
 - it will ask for the new version number and add a commit for it automatically
 - update the `@carbonhealth3/react-native-web` dep in hib
 
