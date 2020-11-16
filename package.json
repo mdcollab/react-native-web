@@ -16,7 +16,7 @@
     "jest": "jest --config ./scripts/jest/config.js",
     "lint": "yarn lint:check --fix",
     "lint:check": "eslint packages scripts",
-    "prerelease": "yarn test && yarn compile && yarn compile:commonjs",
+    "prerelease": "yarn test && yarn compile",
     "release": "cd packages/react-native-web && yarn publish",
     "precommit": "lint-staged",
     "test": "yarn flow && yarn lint:check && yarn jest --runInBand"
