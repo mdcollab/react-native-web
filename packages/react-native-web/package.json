@@ -3,7 +3,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "name": "@carbonhealth3/react-native-web",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "React Native for Web",
   "module": "dist/index.js",
   "main": "dist/cjs/index.js",
@@ -15,6 +15,14 @@
     "src",
     "!**/__tests__"
   ],
+  "scripts": {
+    "clean": "del-cli ./dist",
+    "compile:commonjs": "cross-env BABEL_ENV=commonjs babel --root-mode upward src --out-dir dist/cjs --ignore \"**/__tests__\"",
+    "compile:es": "babel --root-mode upward src --out-dir dist --ignore \"**/__tests__\"",
+    "compile": "npm-run-all clean -p \"compile:* -- {@}\" --",
+    "prerelease": "yarn compile",
+    "release": "yarn publish"
+  },
   "dependencies": {
     "array-find-index": "^1.0.2",
     "create-react-class": "^15.6.2",
