@@ -15,10 +15,6 @@ import View from '../View';
 import Alert from '../Alert';
 import React, { createContext } from 'react';
 
-type Context = {
-  rootTag: any
-};
-
 type Props = {
   WrapperComponent?: ?ComponentType<*>,
   // $FlowFixMe

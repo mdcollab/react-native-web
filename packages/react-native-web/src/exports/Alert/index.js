@@ -4,7 +4,6 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @flow
  */
 
 import React from 'react';
@@ -42,16 +41,16 @@ const styles = StyleSheet.create({
     color: '#2b3137',
     marginTop: 4,
     fontSize: 14,
-    maxWidth: 300,
+    maxWidth: 300
   },
   buttonContainer: {
     alignSelf: 'flex-end',
     flexDirection: 'row',
     flex: 1,
     paddingRight: 14,
-    paddingBottom: 6,
+    paddingBottom: 6
   },
-  buttonContainerMulti: { },
+  buttonContainerMulti: {},
   button: {
     paddingVertical: 5,
     paddingHorizontal: 10,
@@ -59,10 +58,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flex: 1
   },
-  buttonSpacer: {
-  },
-  buttonSpacerMulti: {
-  },
+  buttonSpacer: {},
+  buttonSpacerMulti: {},
   buttonLabel: {
     color: '#4b8ffe',
     fontSize: 14
@@ -70,10 +67,9 @@ const styles = StyleSheet.create({
 });
 
 class AlertViewClass extends React.Component {
+  state = { visible: false };
 
-  state={ visible: false };
-
-  onButtonPress = (onPress) => () => {
+  onButtonPress = onPress => () => {
     this.setState({ visible: false });
     if (onPress) {
       onPress();
@@ -87,7 +83,7 @@ class AlertViewClass extends React.Component {
     }
   };
 
-  _addButtonRef = index => (ref) => {
+  _addButtonRef = index => ref => {
     this[`button_${index}`] = ref;
   };
 
@@ -105,49 +101,28 @@ class AlertViewClass extends React.Component {
     const isMultiButton = buttons.length > 2;
     return (
       <View style={styles.wrapper}>
-        <View
-          onClick={this._handleCancel}
-          style={styles.background}
-        />
+        <View onClick={this._handleCancel} style={styles.background} />
         <View style={styles.container}>
           <View style={styles.textContainer}>
-            <Text
-              style={styles.title}
-            >
-              {title}
-            </Text>
-            <Text
-              style={styles.message}
-            >
-              {message}
-            </Text>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.message}>{message}</Text>
           </View>
-          <View style={[
-            styles.buttonContainer,
-            isMultiButton && styles.buttonContainerMulti
-          ]}>
-            {
-              buttons.map(
-                ({ text, onPress }, i) => (
-                  <TouchableHighlight
-                    key={i}
-                    onPress={this.onButtonPress(onPress)}
-                    ref={this._addButtonRef(i)}
-                    style={[
-                      styles.button,
-                      ((i < buttons.length - 1) && (isMultiButton ? styles.buttonSpacerMulti : styles.buttonSpacer))
-                    ]}
-                    underlayColor="#f0f0f0"
-                  >
-                    <Text
-                      style={styles.buttonLabel}
-                    >
-                      { text }
-                    </Text>
-                  </TouchableHighlight>
-                )
-              )
-            }
+          <View style={[styles.buttonContainer, isMultiButton && styles.buttonContainerMulti]}>
+            {buttons.map(({ text, onPress }, i) => (
+              <TouchableHighlight
+                key={i}
+                onPress={this.onButtonPress(onPress)}
+                ref={this._addButtonRef(i)}
+                style={[
+                  styles.button,
+                  i < buttons.length - 1 &&
+                    (isMultiButton ? styles.buttonSpacerMulti : styles.buttonSpacer)
+                ]}
+                underlayColor="#f0f0f0"
+              >
+                <Text style={styles.buttonLabel}>{text}</Text>
+              </TouchableHighlight>
+            ))}
           </View>
         </View>
       </View>
@@ -155,13 +130,13 @@ class AlertViewClass extends React.Component {
   }
 }
 
-const saveRef = (r) => { instance = r; };
+const saveRef = r => {
+  instance = r;
+};
 
 export default {
-  AlertView: () => (
-    <AlertViewClass ref={saveRef} />
-  ),
-  alert(title, message, buttons = [ { text: 'OK' } ], options) {
+  AlertView: () => <AlertViewClass ref={saveRef} />,
+  alert(title, message, buttons = [{ text: 'OK' }], options) {
     instance.setState({
       visible: true,
       title,
@@ -171,4 +146,3 @@ export default {
     });
   }
 };
-
