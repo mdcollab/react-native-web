@@ -8,11 +8,12 @@
  * @flow
  */
 
+import type { ComponentType, Context } from 'react';
+
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 import Alert from '../Alert';
-import { any, node } from 'prop-types';
-import React, { Component, type ComponentType } from 'react';
+import React, { createContext } from 'react';
 
 type Context = {
   rootTag: any
@@ -25,51 +26,27 @@ type Props = {
   rootTag: any
 };
 
-type State = {
-  mainKey: number
-};
+const RootTagContext: Context<any> = createContext(null);
 
-export default class AppContainer extends Component<Props, State> {
-  state = { mainKey: 1 };
+export default function AppContainer(props: Props) {
+  const { children, WrapperComponent } = props;
 
-  static childContextTypes = {
-    rootTag: any
-  };
+  let innerView = (
+    <View children={children} key={1} pointerEvents="box-none" style={styles.appContainer} />
+  );
 
-  static propTypes = {
-    WrapperComponent: any,
-    children: node,
-    rootTag: any.isRequired
-  };
-
-  getChildContext(): Context {
-    return {
-      rootTag: this.props.rootTag
-    };
+  if (WrapperComponent) {
+    innerView = <WrapperComponent>{innerView}</WrapperComponent>;
   }
 
-  render() {
-    const { children, WrapperComponent } = this.props;
-    let innerView = (
-      <View
-        children={children}
-        key={this.state.mainKey}
-        pointerEvents="box-none"
-        style={styles.appContainer}
-      />
-    );
-
-    if (WrapperComponent) {
-      innerView = <WrapperComponent>{innerView}</WrapperComponent>;
-    }
-
-    return (
+  return (
+    <RootTagContext.Provider value={props.rootTag}>
       <View pointerEvents="box-none" style={styles.appContainer}>
         {innerView}
         <Alert.AlertView />
       </View>
-    );
-  }
+    </RootTagContext.Provider>
+  );
 }
 
 const styles = StyleSheet.create({
