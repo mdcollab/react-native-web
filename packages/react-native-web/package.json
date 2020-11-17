@@ -20,7 +20,7 @@
     "compile:commonjs": "cross-env BABEL_ENV=commonjs babel --root-mode upward src --out-dir dist/cjs --ignore \"**/__tests__\"",
     "compile:es": "babel --root-mode upward src --out-dir dist --ignore \"**/__tests__\"",
     "compile": "npm-run-all clean -p \"compile:* -- {@}\" --",
-    "prerelease": "yarn compile",
+    "prerelease": " yarn clean && yarn compile",
     "release": "yarn publish"
   },
   "dependencies": {

@@ -70,6 +70,7 @@ export { default as PermissionsAndroid } from './exports/PermissionsAndroid';
 export { default as Settings } from './exports/Settings';
 export { default as Systrace } from './exports/Systrace';
 export { default as TVEventHandler } from './exports/TVEventHandler';
+export { default as ViewPropTypes } from './exports/ViewPropTypes';
 
 // plugins
 export { default as DeviceEventEmitter } from './exports/DeviceEventEmitter';

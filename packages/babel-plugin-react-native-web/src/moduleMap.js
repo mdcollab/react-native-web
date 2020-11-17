@@ -59,6 +59,7 @@ module.exports = {
   UIManager: true,
   Vibration: true,
   View: true,
+  ViewPropTypes: true,
   VirtualizedList: true,
   YellowBox: true,
   createElement: true,
